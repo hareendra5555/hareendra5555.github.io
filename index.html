@@ -1,190 +1,282 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Hareendra Nerusu — Portfolio</title>
-  <meta name="description" content="Personal portfolio and resume collection for Hareendra Nerusu." />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Hareendra Nerusu — Software Engineer</title>
+  <meta name="description" content="Hareendra Sri Nag Nerusu — Software Engineer building fast, reliable backend systems, clean APIs, and cloud-native services." />
+  <meta name="theme-color" content="#07070f" />
+  <script>
+    document.documentElement.classList.add('js');
+    (function () {
+      try {
+        var t = localStorage.getItem('theme');
+        document.documentElement.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
   <link rel="stylesheet" href="styles.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;400;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <div class="bg-orb orb-a" aria-hidden="true"></div>
-  <div class="bg-orb orb-b" aria-hidden="true"></div>
-  <div class="bg-orb orb-c" aria-hidden="true"></div>
+  <!-- ───── SVG refraction filters (Liquid Glass lensing) ───── -->
+  <svg class="svg-defs" aria-hidden="true" focusable="false" width="0" height="0">
+    <defs>
+      <filter id="liquidGlass" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.008 0.012" numOctaves="2" seed="14" result="noise" />
+        <feGaussianBlur in="noise" stdDeviation="2.4" result="softNoise" />
+        <feDisplacementMap in="SourceGraphic" in2="softNoise" scale="46" xChannelSelector="R" yChannelSelector="G" result="displaced" />
+        <feGaussianBlur in="displaced" stdDeviation="3" />
+      </filter>
+      <filter id="liquidGlassNav" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.01 0.016" numOctaves="2" seed="3" result="noise" />
+        <feGaussianBlur in="noise" stdDeviation="2" result="softNoise" />
+        <feDisplacementMap in="SourceGraphic" in2="softNoise" scale="34" xChannelSelector="R" yChannelSelector="G" result="displaced" />
+        <feGaussianBlur in="displaced" stdDeviation="2.5" />
+      </filter>
+    </defs>
+  </svg>
 
-  <header class="site-header">
-    <div class="brand">HN</div>
-    <nav class="nav">
-      <a href="#skills">Skills</a>
-      <a href="#experience">Experience</a>
-      <a href="#education">Education</a>
-      <a href="#certifications">Certifications</a>
-      <a href="#projects">Projects</a>
-      <a href="#research">Publications</a>
-      <a href="#contact">Contact</a>
+  <!-- ───── Ambient aurora background ───── -->
+  <div class="aurora" aria-hidden="true">
+    <span class="orb orb-1"></span>
+    <span class="orb orb-2"></span>
+    <span class="orb orb-3"></span>
+    <span class="orb orb-4"></span>
+    <span class="orb orb-5"></span>
+  </div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ───── Floating glass nav ───── -->
+  <header class="nav-shell">
+    <nav class="nav glass refract refract-nav" aria-label="Primary">
+      <a class="brand" href="#top" aria-label="Home">
+        <span>HN</span>
+      </a>
+      <div class="nav-links" id="nav-links">
+        <a href="#skills">Skills</a>
+        <a href="#experience">Experience</a>
+        <a href="#education">Education</a>
+        <a href="#certifications">Certifications</a>
+        <a href="#projects">Projects</a>
+        <a href="#research">Publications</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button class="theme-toggle" type="button" aria-label="Toggle dark / light theme" aria-pressed="false">
+          <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4.2"></circle>
+            <path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5 5l1.6 1.6M17.4 17.4 19 19M19 5l-1.6 1.6M6.6 17.4 5 19"></path>
+          </svg>
+          <svg class="ic-moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.5 6.5 0 0 0 9.8 9.8z"></path>
+          </svg>
+        </button>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </nav>
   </header>
 
-  <main>
+  <main id="top">
+    <!-- ───── Hero ───── -->
     <section class="hero">
-      <div class="hero-text">
-        <p class="eyebrow">Software Engineer • Builder • Problem Solver</p>
-        <h1>Hareendra Nerusu</h1>
-        <p class="lead">I build scalable backend systems, clean APIs, and cloud-native services with a focus on performance and reliability.</p>
+      <div class="hero-text reveal">
+        <p class="eyebrow"><span class="dot"></span> Software Engineer · Backend, Cloud &amp; AI</p>
+        <h1>Hareendra<br />Nerusu</h1>
+        <p class="lead">I build fast, reliable backend systems — async APIs, event-driven pipelines, and cloud-native services — now focused on agentic AI.</p>
         <div class="hero-actions">
-          <a class="btn primary" href="https://drive.google.com/drive/folders/1uuEA_X0aUA7srE8CocAKraa96e5xipoj?usp=sharing" target="_blank" rel="noopener">Download Resume</a>
-          <a class="btn ghost" href="https://drive.google.com/drive/folders/1uuEA_X0aUA7srE8CocAKraa96e5xipoj?usp=sharing" target="_blank" rel="noopener">View Resume</a>
+          <a class="btn primary" href="https://drive.google.com/drive/folders/1uuEA_X0aUA7srE8CocAKraa96e5xipoj?usp=sharing" target="_blank" rel="noopener">Download Résumé</a>
+          <a class="btn ghost" href="#contact">Get in touch</a>
         </div>
         <div class="hero-links" aria-label="Social links">
-          <a class="icon-link github" href="https://github.com/hareendra5555" target="_blank" rel="noopener" aria-label="GitHub">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.52 2.87 8.35 6.84 9.7.5.1.68-.22.68-.48 0-.24-.01-.88-.01-1.72-2.78.62-3.37-1.38-3.37-1.38-.45-1.18-1.11-1.49-1.11-1.49-.9-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.9 1.58 2.36 1.12 2.94.86.09-.67.35-1.12.64-1.38-2.22-.26-4.56-1.14-4.56-5.09 0-1.12.38-2.04 1.01-2.76-.1-.26-.44-1.3.1-2.7 0 0 .83-.27 2.72 1.05.79-.23 1.64-.34 2.48-.34s1.69.12 2.48.34c1.89-1.32 2.72-1.05 2.72-1.05.54 1.4.2 2.44.1 2.7.63.72 1.01 1.64 1.01 2.76 0 3.96-2.34 4.82-4.57 5.08.36.32.69.94.69 1.9 0 1.37-.01 2.47-.01 2.8 0 .26.18.58.69.48A10.04 10.04 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"></path>
-            </svg>
+          <a class="icon-link" href="https://github.com/hareendra5555" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.52 2.87 8.35 6.84 9.7.5.1.68-.22.68-.48 0-.24-.01-.88-.01-1.72-2.78.62-3.37-1.38-3.37-1.38-.45-1.18-1.11-1.49-1.11-1.49-.9-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.9 1.58 2.36 1.12 2.94.86.09-.67.35-1.12.64-1.38-2.22-.26-4.56-1.14-4.56-5.09 0-1.12.38-2.04 1.01-2.76-.1-.26-.44-1.3.1-2.7 0 0 .83-.27 2.72 1.05.79-.23 1.64-.34 2.48-.34s1.69.12 2.48.34c1.89-1.32 2.72-1.05 2.72-1.05.54 1.4.2 2.44.1 2.7.63.72 1.01 1.64 1.01 2.76 0 3.96-2.34 4.82-4.57 5.08.36.32.69.94.69 1.9 0 1.37-.01 2.47-.01 2.8 0 .26.18.58.69.48A10.04 10.04 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"></path></svg>
           </a>
-          <a class="icon-link linkedin" href="https://www.linkedin.com/in/hareendrasrinag/" target="_blank" rel="noopener" aria-label="LinkedIn">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.65-1.85 3.4-1.85 3.64 0 4.31 2.4 4.31 5.52v6.22zM5.34 7.43c-1.14 0-2.07-.93-2.07-2.07 0-1.14.93-2.07 2.07-2.07s2.07.93 2.07 2.07c0 1.14-.93 2.07-2.07 2.07zM7.12 20.45H3.55V9h3.57v11.45z"></path>
-            </svg>
+          <a class="icon-link" href="https://www.linkedin.com/in/hareendrasrinag/" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.65-1.85 3.4-1.85 3.64 0 4.31 2.4 4.31 5.52v6.22zM5.34 7.43c-1.14 0-2.07-.93-2.07-2.07 0-1.14.93-2.07 2.07-2.07s2.07.93 2.07 2.07c0 1.14-.93 2.07-2.07 2.07zM7.12 20.45H3.55V9h3.57v11.45z"></path></svg>
           </a>
-          <a class="icon-link leetcode" href="https://leetcode.com/u/hareendra21/" target="_blank" rel="noopener" aria-label="LeetCode">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M14.9 3.4a1 1 0 0 0-1.4 0l-5.7 5.7a4.9 4.9 0 0 0 0 6.9l3.6 3.6a1 1 0 0 0 1.4-1.4l-3.6-3.6a2.9 2.9 0 0 1 0-4.1l5.7-5.7a1 1 0 0 0 0-1.4z"></path>
-              <path d="M11.7 6.1 9.6 8.2a1 1 0 1 0 1.4 1.4l2.1-2.1a1 1 0 1 0-1.4-1.4z"></path>
-              <path d="M20.3 11.3H13a1 1 0 1 0 0 2h7.3a1 1 0 1 0 0-2z"></path>
-            </svg>
+          <a class="icon-link" href="https://leetcode.com/u/hareendra21/" target="_blank" rel="noopener" aria-label="LeetCode">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.9 3.4a1 1 0 0 0-1.4 0l-5.7 5.7a4.9 4.9 0 0 0 0 6.9l3.6 3.6a1 1 0 0 0 1.4-1.4l-3.6-3.6a2.9 2.9 0 0 1 0-4.1l5.7-5.7a1 1 0 0 0 0-1.4z"></path><path d="M11.7 6.1 9.6 8.2a1 1 0 1 0 1.4 1.4l2.1-2.1a1 1 0 1 0-1.4-1.4z"></path><path d="M20.3 11.3H13a1 1 0 1 0 0 2h7.3a1 1 0 1 0 0-2z"></path></svg>
+          </a>
+          <a class="icon-link" href="mailto:hareendra05@gmail.com" aria-label="Email">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm9 7.2L4.3 7H19.7L12 12.2zM4 8.5V17h16V8.5l-7.4 5a1 1 0 0 1-1.2 0L4 8.5z"></path></svg>
           </a>
         </div>
       </div>
-      <div class="hero-card" aria-hidden="true">
+
+      <aside class="hero-card glass refract" aria-label="Current status">
+        <div class="hero-card-glow" aria-hidden="true"></div>
         <div class="hero-card-inner">
-          <p class="card-label">Now</p>
-          <h2>Building with impact</h2>
-          <p>Systems that are fast, reliable, and human-friendly.</p>
-          <div class="location">
+          <p class="card-label">Open to work</p>
+          <h2>New-grad SWE<br />&amp; Agentic AI</h2>
+          <p class="card-sub">Just earned my M.S. in Computer Science from the University of Florida — now seeking new-grad software engineer and agentic AI roles.</p>
+          <div class="status-row">
             <span class="pulse" aria-hidden="true"></span>
-            <a href="https://www.google.com/maps/place/Gainesville,+FL" target="_blank" rel="noopener">Gainesville, Florida, United States</a>
+            <span>Available now</span>
+          </div>
+          <div class="location">
+            <svg viewBox="0 0 24 24" aria-hidden="true" class="pin"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+            <a href="https://www.google.com/maps/place/Gainesville,+FL" target="_blank" rel="noopener">Gainesville, Florida</a>
           </div>
         </div>
-      </div>
+      </aside>
     </section>
 
+    <!-- ───── Stats band ───── -->
+    <section class="stats reveal" aria-label="Highlights">
+      <article class="stat glass">
+        <span class="stat-num">3.92<small>/4.0</small></span>
+        <span class="stat-label">Graduate GPA</span>
+      </article>
+      <article class="stat glass">
+        <span class="stat-num">78<small>%</small></span>
+        <span class="stat-label">Faster clinical APIs</span>
+      </article>
+      <article class="stat glass">
+        <span class="stat-num">1,000<small>+</small></span>
+        <span class="stat-label">Daily users served</span>
+      </article>
+      <article class="stat glass">
+        <span class="stat-num">AWS</span>
+        <span class="stat-label">Certified Architect</span>
+      </article>
+    </section>
+
+    <!-- ───── Skills ───── -->
     <section id="skills" class="section">
-      <div class="section-head">
+      <div class="section-head reveal">
+        <p class="kicker">01 — Toolkit</p>
         <h2>Skills</h2>
-        <p>End-to-end engineering toolkit grouped for clarity.</p>
+        <p>The stack I reach for to design, ship, and operate backend systems end to end.</p>
       </div>
-      <div class="bubbles">
-        <article class="skill-bubble">
-          <h3 class="bubble-title">Languages & Scripting</h3>
-          <div class="bubble-content">
-            <p>Java, Python, Go, C#, C, C++, JavaScript, TypeScript, SQL, Bash, Shell Scripting</p>
-          </div>
+      <div class="skills-grid">
+        <article class="skill-card glass reveal">
+          <div class="skill-card-glow" aria-hidden="true"></div>
+          <h3>Languages</h3>
+          <ul class="chips">
+            <li>Python</li><li>Go</li><li>JavaScript</li><li>TypeScript</li><li>SQL</li><li>Java</li>
+          </ul>
         </article>
-        <article class="skill-bubble">
-          <h3 class="bubble-title">Backend & APIs</h3>
-          <div class="bubble-content">
-            <p>RESTful APIs, Microservices, Spring Boot, Spring MVC, Spring Security, Spring Data JPA, Hibernate, FastAPI, Flask, ASP.NET Core, Node.js, Express.js</p>
-          </div>
+        <article class="skill-card glass reveal">
+          <div class="skill-card-glow" aria-hidden="true"></div>
+          <h3>Frameworks &amp; Tools</h3>
+          <ul class="chips">
+            <li>FastAPI</li><li>Pydantic</li><li>SQLAlchemy</li><li>Celery</li><li>Node.js</li><li>Express</li><li>React</li><li>Redux</li><li>LangChain</li><li>LangGraph</li><li>REST APIs</li><li>WebSocket</li><li>pytest</li><li>Prometheus</li><li>Grafana</li>
+          </ul>
         </article>
-        <article class="skill-bubble">
-          <h3 class="bubble-title">Frontend</h3>
-          <div class="bubble-content">
-            <p>React, Redux, React Router, HTML5, CSS3, Bootstrap, JSON, XML, Axios</p>
-          </div>
-        </article>
-        <article class="skill-bubble">
-          <h3 class="bubble-title">Databases & Search</h3>
-          <div class="bubble-content">
-            <p>PostgreSQL, MySQL, MongoDB, DynamoDB, Redis, Elasticsearch, Oracle, SQL Server, JDBC</p>
-          </div>
-        </article>
-        <article class="skill-bubble">
-          <h3 class="bubble-title">Cloud & DevOps</h3>
-          <div class="bubble-content">
-            <p>AWS (EC2, Lambda, S3, RDS, IAM, CloudWatch, DynamoDB), Docker, Kubernetes, Terraform, Jenkins, GitHub Actions, CI/CD, Maven, Gradle, Docker Compose</p>
-          </div>
-        </article>
-        <article class="skill-bubble">
-          <h3 class="bubble-title">Observability & Testing</h3>
-          <div class="bubble-content">
-            <p>Prometheus, Grafana, ELK Stack, SLF4J, Logback, JUnit, Mockito, React Testing Library, Postman, Git, GitHub, GitLab, Jira, Confluence</p>
-          </div>
+        <article class="skill-card glass reveal">
+          <div class="skill-card-glow" aria-hidden="true"></div>
+          <h3>Cloud, DevOps &amp; Databases</h3>
+          <ul class="chips">
+            <li>AWS EC2</li><li>EKS</li><li>Lambda</li><li>S3</li><li>Docker</li><li>Kubernetes</li><li>GitHub Actions</li><li>PostgreSQL</li><li>MongoDB</li><li>Redis</li><li>pgvector</li><li>Alembic</li>
+          </ul>
         </article>
       </div>
     </section>
 
-    <section id="experience" class="section alt">
-      <div class="section-head">
+    <!-- ───── Experience ───── -->
+    <section id="experience" class="section">
+      <div class="section-head reveal">
+        <p class="kicker">02 — Where I've worked</p>
         <h2>Experience</h2>
-        <p>Recent roles focused on backend systems, performance, and reliability.</p>
+        <p>Backend-focused roles centered on performance, reliability, and clean architecture.</p>
       </div>
       <div class="timeline">
-        <article class="card">
-          <div class="role-head">
-            <div>
-              <h3>Software Development Engineer</h3>
-              <p class="muted">University of Florida • Gainesville, Florida</p>
+        <article class="tl-item reveal">
+          <span class="tl-node" aria-hidden="true"></span>
+          <div class="card glass">
+            <div class="card-glow" aria-hidden="true"></div>
+            <div class="role-head">
+              <div>
+                <h3>Software Engineer</h3>
+                <p class="muted">UF Health · Gainesville, Florida</p>
+              </div>
+              <span class="pill">Jan 2025 – Present</span>
             </div>
-            <span class="pill">Jan 2025 – Present</span>
+            <ul>
+              <li>Architected a <strong>FastAPI</strong> async REST backend with Pydantic validation and SQLAlchemy async ORM serving real-time clinical data across 6 departments — cutting average API response from 4.1s to 900ms (<strong>78%</strong>) for 1,000+ daily users.</li>
+              <li>Built a JWT/OAuth2 auth layer with refresh-token rotation and role-based access across 4 services, eliminating per-service logins and cutting auth support tickets by <strong>40%</strong>.</li>
+              <li>Designed a <strong>Celery + Redis</strong> task queue to offload lab-result and discharge jobs from the request cycle, reducing synchronous API wait time by <strong>65%</strong> under peak load.</li>
+              <li>Optimized PostgreSQL on 5M+ row patient tables via Alembic migrations and composite indexes, dropping p95 read latency from 3.8s to 680ms with zero downtime.</li>
+              <li>Containerized services with Docker and shipped to <strong>AWS EKS</strong> through GitHub Actions CI/CD with pytest gates — enabling daily releases and cutting deployment incidents <strong>100%</strong> over 3 months.</li>
+            </ul>
           </div>
-          <ul>
-            <li>Delivered a high-performance medical web application with asynchronous FastAPI microservices, scaling to 3K+ concurrent users and boosting throughput by 40%.</li>
-            <li>Built distributed data storage with AWS S3 and PostgreSQL on RDS, cutting query latency by 30% with indexing and schema tuning.</li>
-            <li>Implemented OAuth2/JWT-secured APIs with Redis caching, reducing database reads by 45% and improving response times by 25%.</li>
-            <li>Owned CI/CD and deployment with Docker, GitHub Actions, AWS EC2/Lambda, and CloudWatch monitoring, reducing deployment failures by 25%.</li>
-          </ul>
         </article>
-        <article class="card">
-          <div class="role-head">
-            <div>
-              <h3>Software Development Engineer</h3>
-              <p class="muted">C Square Solutions • Bangalore, India</p>
+
+        <article class="tl-item reveal">
+          <span class="tl-node" aria-hidden="true"></span>
+          <div class="card glass">
+            <div class="card-glow" aria-hidden="true"></div>
+            <div class="role-head">
+              <div>
+                <h3>Software Engineer</h3>
+                <p class="muted">BesInfra · Hyderabad, India</p>
+              </div>
+              <span class="pill">Dec 2023 – Jul 2024</span>
             </div>
-            <span class="pill">May 2022 – Dec 2023</span>
+            <ul>
+              <li>Built a client project-management portal with <strong>React, Redux, and Node/Express</strong> (JWT auth, S3 uploads), cutting onboarding from 5 days to 1 (<strong>80%</strong>) across 3 teams.</li>
+              <li>Architected a Node/Express API gateway consolidating 4 upstream microservices with MongoDB aggregation pipelines, cutting frontend API calls by <strong>60%</strong>.</li>
+              <li>Diagnosed slow reporting on a 2M+ document MongoDB collection; compound indexes and <code>$lookup</code> rewrites cut report load from 5.8s to 1.2s (<strong>79%</strong>).</li>
+              <li>Refactored a high-traffic React data grid with virtualization and memoization, lifting the Lighthouse score from 54 to 89 and resolving all reported lag.</li>
+              <li>Instrumented services with <strong>Prometheus + Grafana</strong> (p95 latency, error rates), catching 2 memory-leak incidents before they breached SLAs.</li>
+            </ul>
           </div>
-          <ul>
-            <li>Engineered Java 17 Spring Boot microservices serving 10K+ daily requests across 5+ production systems.</li>
-            <li>Refactored PostgreSQL/MySQL queries with Spring Data JPA and JDBC to cut API response times by 35%.</li>
-            <li>Architected standardized authentication with Spring Security and JWT, reducing recurring vulnerabilities by 20%.</li>
-            <li>Streamlined releases with Maven/Jenkins CI/CD, Docker, and AWS (EC2, RDS) deployments.</li>
-          </ul>
         </article>
       </div>
     </section>
 
+    <!-- ───── Education ───── -->
     <section id="education" class="section">
-      <div class="section-head">
+      <div class="section-head reveal">
+        <p class="kicker">03 — Education</p>
         <h2>Education</h2>
-        <p>Graduate studies focused on systems, software, and cloud computing.</p>
+        <p>Computer science, with a focus on systems, distributed computing, and the cloud.</p>
       </div>
       <div class="grid">
-        <article class="card">
+        <article class="card glass reveal">
+          <div class="card-glow" aria-hidden="true"></div>
           <h3>University of Florida</h3>
-          <p class="muted">Master of Science, Computer Science</p>
-          <p class="muted">Aug 2024 – May 2026 • Gainesville, Florida</p>
-          <p><strong>GPA:</strong> 3.92 / 4.00</p>
-          <p><strong>Coursework:</strong> Data Structures & Algorithms, OOP, Operating Systems, Computer Networks, Distributed Systems, Databases, Software Engineering, Cloud Computing.</p>
+          <p class="muted">M.S. — Computer Science</p>
+          <p class="muted">Aug 2024 – May 2026 · Gainesville, Florida</p>
+          <p class="edu-line"><span class="tag">GPA 3.92 / 4.0</span></p>
+          <p>Coursework: Distributed Systems, Operating Systems, Computer Networks, Databases, Cloud Computing, Algorithms.</p>
+        </article>
+        <article class="card glass reveal">
+          <div class="card-glow" aria-hidden="true"></div>
+          <h3>Amrita Vishwa Vidyapeetham</h3>
+          <p class="muted">B.Tech — Computer Science &amp; Engineering</p>
+          <p class="muted">Jun 2024 · Kerala, India</p>
+          <p class="edu-line"><span class="tag">CGPA 8.95 / 10</span></p>
+          <p>Foundations in data structures, OOP, networks, and software engineering.</p>
         </article>
       </div>
     </section>
 
-    <section id="certifications" class="section alt">
-      <div class="section-head">
+    <!-- ───── Certifications ───── -->
+    <section id="certifications" class="section">
+      <div class="section-head reveal">
+        <p class="kicker">04 — Credentials</p>
         <h2>Certifications</h2>
-        <p>Professional certifications with verification links.</p>
+        <p>Verified cloud certifications.</p>
       </div>
       <div class="grid">
-        <article class="card">
+        <article class="card glass reveal">
+          <div class="card-glow" aria-hidden="true"></div>
           <h3>AWS Certified Solutions Architect – Associate</h3>
           <p class="muted">Amazon Web Services</p>
           <div class="card-actions">
             <a class="btn small ghost" href="https://www.credly.com/badges/06f970d6-c70e-44ab-9804-bf45594e1265/linked_in_profile" target="_blank" rel="noopener">View credential</a>
           </div>
         </article>
-        <article class="card">
+        <article class="card glass reveal">
+          <div class="card-glow" aria-hidden="true"></div>
           <h3>AWS Certified Cloud Practitioner</h3>
           <p class="muted">Amazon Web Services</p>
           <div class="card-actions">
@@ -194,59 +286,77 @@
       </div>
     </section>
 
+    <!-- ───── Projects ───── -->
     <section id="projects" class="section">
-      <div class="section-head">
+      <div class="section-head reveal">
+        <p class="kicker">05 — Selected work</p>
         <h2>Projects</h2>
-        <p>Selected builds across backend systems, platforms, and ML.</p>
+        <p>Builds across backend systems, distributed platforms, and applied ML.</p>
       </div>
       <div class="grid">
-        <article class="card accent">
-          <h3>GatoRides — Ride-Sharing Web Application</h3>
-          <p>Full-stack ride-sharing platform with Golang services, MongoDB, and React; built for 3 roles and 100+ concurrent requests.</p>
+        <article class="card glass reveal">
+          <div class="card-glow" aria-hidden="true"></div>
+          <h3>Documind — Intelligent Document Q&amp;A</h3>
+          <p>A LangChain/LangGraph multi-step RAG pipeline with pgvector embeddings and FastAPI streaming — cut hallucinations 40% across 50K+ indexed pages at 99.5% uptime on AWS EC2 via Docker.</p>
           <div class="card-actions">
-            <a class="btn small ghost" href="https://github.com/DhanushUF18/SE_GatoRides" target="_blank" rel="noopener">GitHub</a>
+            <a class="btn small ghost" href="https://github.com/hareendra5555" target="_blank" rel="noopener">GitHub</a>
           </div>
         </article>
-        <article class="card accent">
-          <h3>Task Management Platform (API + Dashboard + Notifications)</h3>
-          <p>Combined system spanning ASP.NET Core and FastAPI services, React dashboard, Redis caching, and AWS-backed event-driven notifications.</p>
+        <article class="card glass reveal">
+          <div class="card-glow" aria-hidden="true"></div>
+          <h3>GatoRides — Real-Time Ride-Sharing</h3>
+          <p>A stateless Go backend with geospatial MongoDB indexes and Redis pub/sub WebSocket push handling 100+ concurrent requests — 30% lower match latency and sub-200ms location updates on AWS EC2.</p>
           <div class="card-actions">
-            <a class="btn small ghost" href="https://github.com/hareendra5555/task-management-notification-platform" target="_blank" rel="noopener">GitHub</a>
+            <a class="btn small ghost" href="https://github.com/hareendra5555" target="_blank" rel="noopener">GitHub</a>
           </div>
         </article>
-        <article class="card accent">
-          <h3>SmartQueue — Distributed Job Scheduling System</h3>
-          <p>Distributed job scheduling system with Redis priority queues, Spring Boot worker pool with exponential backoff, AWS SQS persistence, and React WebSocket dashboard monitored via Prometheus and Grafana.</p>
+        <article class="card glass reveal">
+          <div class="card-glow" aria-hidden="true"></div>
+          <h3>Task Management Platform</h3>
+          <p>API + dashboard + notifications spanning ASP.NET Core and FastAPI services, a React dashboard, Redis caching, and AWS-backed event-driven notifications.</p>
           <div class="card-actions">
-            <a class="btn small ghost" href="https://github.com/hareendra5555/smartqueue" target="_blank" rel="noopener">GitHub</a>
+            <a class="btn small ghost" href="https://github.com/hareendra5555" target="_blank" rel="noopener">GitHub</a>
           </div>
         </article>
-        <article class="card accent">
-          <h3>DocuMind</h3>
-          <p>An advanced RAG (Retrieval-Augmented Generation) pipeline that enables intelligent Q&A over large document collections using LangChain, OpenAI Embeddings, pgvector, and FastAPI.</p>
+        <article class="card glass reveal">
+          <div class="card-glow" aria-hidden="true"></div>
+          <h3>Enterprise Workflow Management</h3>
+          <p>Spring Boot REST APIs for employee records with pagination, validation, and a clean layered architecture.</p>
           <div class="card-actions">
-            <a class="btn small ghost" href="https://github.com/hareendra5555/documind" target="_blank" rel="noopener">GitHub</a>
+            <a class="btn small ghost" href="https://github.com/hareendra5555" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </article>
+        <article class="card glass reveal">
+          <div class="card-glow" aria-hidden="true"></div>
+          <h3>Medical Imaging Prediction</h3>
+          <p>An ML inference pipeline using PyTorch and FastAPI with versioned datasets and models stored in AWS S3.</p>
+          <div class="card-actions">
+            <a class="btn small ghost" href="https://github.com/hareendra5555" target="_blank" rel="noopener">GitHub</a>
           </div>
         </article>
       </div>
     </section>
 
+    <!-- ───── Publications ───── -->
     <section id="research" class="section">
-      <div class="section-head">
+      <div class="section-head reveal">
+        <p class="kicker">06 — Research</p>
         <h2>Publications</h2>
-        <p>Selected research papers and publications.</p>
+        <p>Peer-reviewed papers in data mining and applied machine learning.</p>
       </div>
       <div class="grid">
-        <article class="card">
+        <article class="card glass reveal">
+          <div class="card-glow" aria-hidden="true"></div>
           <h3>Real-Time Event Detection in Social Media Streams using Stream Data Mining</h3>
-          <p class="muted">International Journal For Research in Applied Science and Engineering Technology (iJRASET) · Aug 13, 2023</p>
+          <p class="muted">IJRASET · Aug 13, 2023</p>
           <div class="card-actions">
             <a class="btn small ghost" href="https://www.ijraset.com/research-paper/real-time-event-detection-in-social-media-streams" target="_blank" rel="noopener">View publication</a>
           </div>
         </article>
-        <article class="card">
-          <h3>A Novel Approaches of Detecting Breast Cancer with Hybrid Models: Techniques and Challenges</h3>
-          <p class="muted">International Journal of Scientific Research in Engineering and Management (IJSREM) · Jul 5, 2023</p>
+        <article class="card glass reveal">
+          <div class="card-glow" aria-hidden="true"></div>
+          <h3>A Novel Approach to Detecting Breast Cancer with Hybrid Models: Techniques and Challenges</h3>
+          <p class="muted">IJSREM · Jul 5, 2023</p>
           <div class="card-actions">
             <a class="btn small ghost" href="https://ijsrem.com/download/a-novel-approaches-of-detecting-breast-cancer-with-hybrid-models-techniques-and-challenges/" target="_blank" rel="noopener">View publication</a>
           </div>
@@ -254,18 +364,17 @@
       </div>
     </section>
 
+    <!-- ───── Contact ───── -->
     <section id="contact" class="section">
-      <div class="section-head">
-        <h2>Contact</h2>
-        <p>Want a custom resume version or a quick intro? Reach out.</p>
-      </div>
-      <div class="contact-card">
-        <div>
-          <h3>Let’s talk</h3>
-          <p>Email or LinkedIn works best.</p>
+      <div class="contact-card glass reveal">
+        <div class="card-glow" aria-hidden="true"></div>
+        <div class="contact-copy">
+          <p class="kicker">07 — Contact</p>
+          <h2>Let's build something.</h2>
+          <p>Open to new-grad software engineer and agentic AI roles. Email or LinkedIn is the fastest way to reach me.</p>
         </div>
         <div class="contact-actions">
-          <a class="btn" href="mailto:hareendra05@gmail.com">Email</a>
+          <a class="btn primary" href="mailto:hareendra05@gmail.com">Email me</a>
           <a class="btn ghost" href="https://www.linkedin.com/in/hareendrasrinag/" target="_blank" rel="noopener">LinkedIn</a>
         </div>
       </div>
@@ -273,7 +382,7 @@
   </main>
 
   <footer class="footer">
-    <p>© <span id="year"></span> Hareendra Nerusu</p>
+    <p>© <span id="year"></span> Hareendra Nerusu · Built with care in Gainesville, FL</p>
   </footer>
 
   <script src="script.js"></script>
