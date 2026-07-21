@@ -1641,3 +1641,60 @@ main { position: relative; z-index: 1; }
     background: color-mix(in srgb, var(--bg) 82%, var(--text) 18%);
   }
 }
+
+/* ============================================================
+   Custom bat cursor + throwable batarang
+   ============================================================ */
+@media (hover: hover) and (pointer: fine) {
+  :root { --bat-cursor: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%22-8%20-8%20216%20108%22%3E%3Cpath%20d%3D%22M100%2090%20C88%2076%2C%2080%2070%2C%2070%2062%20C56%2052%2C%2038%2050%2C%2020%2056%20C34%2044%2C%2048%2040%2C%2058%2044%20C40%2030%2C%2018%2024%2C%206%2026%20C30%208%2C%2064%208%2C%2086%2020%20L92%206%20L100%2016%20L108%206%20L114%2020%20C136%208%2C%20170%208%2C%20194%2026%20C182%2024%2C%20160%2030%2C%20142%2044%20C152%2040%2C%20166%2044%2C%20180%2056%20C162%2050%2C%20144%2052%2C%20130%2062%20C120%2070%2C%20112%2076%2C%20100%2090%20Z%22%20fill%3D%22%23ffd100%22%20stroke%3D%22%230a0a0c%22%20stroke-width%3D%229%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E") 16 16, auto; }
+  html, body { cursor: var(--bat-cursor); }
+  a, button, .magnetic, .music-card, [role="button"], label, summary { cursor: var(--bat-cursor); }
+  input, textarea, select { cursor: text; }
+}
+
+.batarang {
+  position: absolute;
+  top: clamp(64px, 11vw, 132px);
+  right: clamp(18px, 6vw, 84px);
+  width: clamp(58px, 8vw, 86px);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--bat);
+  z-index: 2;
+  filter: drop-shadow(0 5px 12px rgba(0,0,0,.45)) drop-shadow(0 0 10px var(--node-glow));
+  animation: batbob 4.2s ease-in-out infinite;
+  transition: transform 0.3s var(--spring);
+  -webkit-tap-highlight-color: transparent;
+}
+.batarang svg { width: 100%; height: auto; display: block; fill: currentColor; }
+.batarang:hover { transform: scale(1.08) rotate(-6deg); }
+.batarang:active { transform: scale(0.94); }
+.batarang.throwing { animation: none; }
+@keyframes batbob {
+  0%, 100% { transform: translateY(0) rotate(-4deg); }
+  50%      { transform: translateY(-9px) rotate(4deg); }
+}
+.batarang-hint {
+  position: absolute;
+  top: 50%;
+  right: calc(100% + 12px);
+  translate: 10px -50%;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  color: var(--text);
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border);
+  box-shadow: inset 0 1px 0 var(--specular);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease), translate 0.4s var(--spring);
+}
+.batarang:hover .batarang-hint { opacity: 1; translate: 0 -50%; }
+
+@media (prefers-reduced-motion: reduce) { .batarang { animation: none; } }
+@media (max-width: 560px) { .batarang { top: 20px; right: 16px; width: 52px; } }

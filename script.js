@@ -432,6 +432,37 @@ if (!reduceMotion) {
 }
 
 /* ============================================================
+   Throwable batarang (contact) — fling it on a spinning arc
+   ============================================================ */
+const batarang = document.querySelector('.batarang');
+if (batarang) {
+  let flying = false;
+  batarang.addEventListener('click', () => {
+    if (flying) return;
+    flying = true;
+    batarang.classList.add('throwing');
+
+    const kf = reduceMotion
+      ? [{ transform: 'rotate(0deg)' }, { transform: 'rotate(360deg)' }]
+      : [
+          { transform: 'translate(0,0) rotate(0deg)', offset: 0 },
+          { transform: 'translate(-150px,-72px) rotate(380deg)', offset: 0.28 },
+          { transform: 'translate(-330px,-26px) rotate(760deg)', offset: 0.5 },
+          { transform: 'translate(-150px,-80px) rotate(1140deg)', offset: 0.72 },
+          { transform: 'translate(0,0) rotate(1440deg)', offset: 1 }
+        ];
+
+    const anim = batarang.animate(kf, {
+      duration: reduceMotion ? 600 : 1150,
+      easing: 'cubic-bezier(0.4, 0.05, 0.3, 1)'
+    });
+    anim.finished
+      .catch(() => {})
+      .finally(() => { batarang.classList.remove('throwing'); flying = false; });
+  });
+}
+
+/* ============================================================
    Scroll-reveal + staggered cascade
    ============================================================ */
 const revealEls = document.querySelectorAll('.reveal');
