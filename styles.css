@@ -937,13 +937,47 @@ main { position: relative; z-index: 1; }
   transform: translate3d(var(--tx, 0px), var(--ty, 0px), 0);
   transition: transform 0.4s var(--ease), background 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
 }
-.icon-link svg { width: 21px; height: 21px; fill: currentColor; opacity: 0.92; transition: transform 0.45s var(--spring); }
-.icon-link:hover {
-  background: var(--glass-hover);
-  border-color: var(--glass-hover);
-  box-shadow: inset 0 1px 0 var(--specular), 0 14px 30px -12px var(--shadow-strong);
+.icon-link { --brand: var(--text); overflow: visible; }
+/* brand-coloured glyph, sitting above the tinted-glass glow */
+.icon-link svg {
+  position: relative;
+  z-index: 1;
+  width: 21px; height: 21px;
+  fill: var(--brand);
+  transition: transform 0.45s var(--spring), filter 0.3s var(--ease);
 }
-.icon-link:hover svg { transform: scale(1.12); }
+/* liquid colour: a soft brand-tint welling up inside the glass, with a
+   top sheen so it reads as tinted liquid glass rather than a flat chip */
+.icon-link::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 95% at 50% 118%, color-mix(in srgb, var(--brand) 42%, transparent), transparent 66%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16), transparent 46%);
+  opacity: 0.6;
+  transition: opacity 0.32s var(--ease);
+}
+.icon-link:hover {
+  border-color: color-mix(in srgb, var(--brand) 45%, var(--glass-border));
+  box-shadow:
+    inset 0 1px 0 var(--specular),
+    0 12px 26px -12px color-mix(in srgb, var(--brand) 60%, transparent);
+}
+.icon-link:hover::before { opacity: 1; }
+.icon-link:hover svg { transform: scale(1.12); filter: drop-shadow(0 0 6px color-mix(in srgb, var(--brand) 60%, transparent)); }
+
+/* brand colours (GitHub adapts per theme — its mark is monochrome) */
+.icon-link.soc-gh   { --brand: #e8edf5; }
+:root[data-theme="light"] .icon-link.soc-gh { --brand: #1b1f24; }
+.icon-link.soc-li   { --brand: #2f8fef; }
+.icon-link.soc-lc   { --brand: #ffa116; }
+.icon-link.soc-mail { --brand: #ff5d6c; }
+:root[data-theme="light"] .icon-link.soc-li   { --brand: #0a66c2; }
+:root[data-theme="light"] .icon-link.soc-mail { --brand: #e5384a; }
 
 /* tooltip */
 .icon-link::after {
@@ -1816,3 +1850,112 @@ main { position: relative; z-index: 1; }
 
 @media (prefers-reduced-motion: reduce) { .batarang { animation: none; } }
 @media (max-width: 560px) { .batarang { top: 20px; right: 16px; width: 52px; } }
+
+/* ============================================================
+   Apple-style glassy brand icons (skills chips + cert badge)
+   Each tile carries its own brand colour; the glass sheen/rim/
+   depth is theme-independent so the colours stay true.
+   ============================================================ */
+
+.cert-badge {
+  width: 68px;
+  height: 68px;
+  margin: 0 0 18px;
+  border-radius: 19px;
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -12px 18px -12px rgba(0, 0, 0, 0.5),
+    0 8px 18px -8px rgba(0, 0, 0, 0.55);
+}
+.cert-badge::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(150deg, rgba(255,255,255,.7), rgba(255,255,255,.04) 42%, transparent 60%, rgba(255,255,255,.25));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  pointer-events: none; z-index: 3;
+}
+.cert-badge::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 48%;
+  border-radius: 19px 19px 40% 40% / 19px 19px 26px 26px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.34), transparent);
+  pointer-events: none; z-index: 2;
+}
+.cert-badge svg { width: 62%; height: 62%; position: relative; z-index: 1; }
+
+/* ── Institutional badges (schools, companies, publishers) ──
+   Brand-coloured monogram tiles with the same glass finish. Swap the
+   inner monogram for <img src="assets/…"> to use an exact logo file. */
+.org-badge {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  margin: 0 0 16px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -12px 18px -12px rgba(0, 0, 0, 0.35),
+    0 8px 18px -8px rgba(0, 0, 0, 0.5);
+}
+.org-badge::before {
+  content: "";
+  position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+  background: linear-gradient(150deg, rgba(255,255,255,.85), rgba(255,255,255,.06) 42%, transparent 60%, rgba(255,255,255,.3));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; z-index: 3;
+}
+.org-badge::after {
+  content: "";
+  position: absolute; left: 0; right: 0; top: 0; height: 48%;
+  border-radius: 16px 16px 40% 40% / 16px 16px 24px 24px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.4), transparent);
+  pointer-events: none; z-index: 2;
+}
+.org-badge .org-mono {
+  position: relative; z-index: 1;
+  font-family: "Inter", sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.org-badge img { position: relative; z-index: 1; width: 74%; height: 74%; object-fit: contain; }
+
+/* place it beside the role text in the experience timeline */
+.role-head .org-badge { margin: 0 14px 0 0; }
+.role-lead { display: flex; align-items: center; gap: 0; }
+
+/* per-institution colours */
+.org-uf        { background: #ffffff; }
+.org-uf .org-mono        { color: #0021A5; font-size: 20px; }
+.org-ufhealth  { background: #0021A5; }
+.org-ufhealth .org-mono  { color: #fff; font-size: 17px; }
+.org-ufhealth .org-mono b { color: #fa4616; font-weight: 800; }
+.org-amrita    { background: #ffffff; }
+.org-amrita .org-mono    { color: #A1006B; font-size: 26px; }
+.org-besinfra  { background: #f3f7f4; }
+.org-besinfra .org-mono  { font-size: 22px; }
+.org-besinfra .org-mono b { color: #1B75BB; }
+.org-besinfra .org-mono i { color: #39B54A; font-style: normal; }
+.org-ijraset   { background: #ffffff; }
+.org-ijraset .org-mono   { color: #C1272D; font-size: 15px; }
+.org-ijsrem    { background: #4b4fc4; }
+.org-ijsrem .org-mono    { color: #fff; font-size: 15px; }
+
+/* ── brand tile backgrounds ── */
+.ic-aws        { background: #232f3e; }
