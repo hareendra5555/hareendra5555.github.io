@@ -13,6 +13,10 @@
       try {
         var t = localStorage.getItem('theme');
         document.documentElement.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
+        var g = parseFloat(localStorage.getItem('glass'));
+        if (g >= 20 && g <= 200) {
+          document.documentElement.style.setProperty('--glass-factor', g / 100);
+        }
       } catch (e) {
         document.documentElement.setAttribute('data-theme', 'dark');
       }
@@ -127,6 +131,14 @@
             </svg>
           </span>
         </button>
+        <div class="glass-control">
+          <button class="glass-btn" type="button" aria-label="Adjust glass opacity" aria-haspopup="dialog" aria-expanded="false" aria-controls="glass-panel">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <path d="M4 8h10M18 8h2M4 16h2M10 16h10" />
+              <circle cx="16" cy="8" r="2.4" /><circle cx="8" cy="16" r="2.4" />
+            </svg>
+          </button>
+        </div>
         <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu">
           <span></span><span></span><span></span>
         </button>
@@ -134,6 +146,23 @@
       <span class="nav-progress" aria-hidden="true"></span>
     </nav>
   </header>
+
+  <!-- Glass control popover — portaled to body so the nav's backdrop-filter
+       (which makes the nav a containing block for fixed descendants) and its
+       overflow:hidden don't clip it. -->
+  <div class="glass-panel glass frost" id="glass-panel" role="dialog" aria-label="Glass appearance" hidden>
+    <div class="glass-panel-head">
+      <span class="glass-panel-title">Liquid glass</span>
+      <output class="glass-value" id="glass-value" for="glass-range">100%</output>
+    </div>
+    <input class="glass-range" id="glass-range" type="range" min="20" max="200" step="5" value="100"
+           aria-label="Glass opacity" aria-valuetext="100 percent" />
+    <div class="glass-panel-foot">
+      <span class="glass-hint-lo">Sheer</span>
+      <button class="glass-reset" type="button">Reset</button>
+      <span class="glass-hint-hi">Frosted</span>
+    </div>
+  </div>
 
   <main id="top">
     <!-- ───── Hero ───── -->

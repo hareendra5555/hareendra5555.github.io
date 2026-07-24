@@ -214,6 +214,84 @@ if (themeToggle) {
 }
 
 /* ============================================================
+   Liquid-glass appearance control (slider + popover)
+   Writes --glass-factor on :root; every glass fill scales from it.
+   ============================================================ */
+const glassControl = document.querySelector('.glass-control');
+const glassPanel = document.getElementById('glass-panel');
+if (glassControl && glassPanel) {
+  const btn = glassControl.querySelector('.glass-btn');
+  const panel = glassPanel; // portaled to <body>, not inside .glass-control
+  const range = panel.querySelector('.glass-range');
+  const valueOut = panel.querySelector('.glass-value');
+  const resetBtn = panel.querySelector('.glass-reset');
+  const DEFAULT = 100;
+
+  const clampVal = (v) => Math.min(200, Math.max(20, v || DEFAULT));
+
+  // reflect a percentage onto the document, the readout, and the track fill
+  const apply = (pct, persist) => {
+    pct = clampVal(pct);
+    document.documentElement.style.setProperty('--glass-factor', (pct / 100).toFixed(3));
+    range.value = String(pct);
+    range.setAttribute('aria-valuetext', `${pct} percent`);
+    valueOut.textContent = `${pct}%`;
+    // fill the slider track up to the thumb (min 20 → max 200)
+    range.style.setProperty('--p', `${((pct - 20) / 180) * 100}%`);
+    if (persist) {
+      try { localStorage.setItem('glass', String(pct)); } catch (e) {}
+    }
+  };
+
+  // init from storage (falls back to the markup default)
+  let saved = DEFAULT;
+  try {
+    const g = parseFloat(localStorage.getItem('glass'));
+    if (g >= 20 && g <= 200) saved = g;
+  } catch (e) {}
+  apply(saved, false);
+
+  range.addEventListener('input', () => apply(parseFloat(range.value), true));
+  resetBtn.addEventListener('click', () => { apply(DEFAULT, true); range.focus(); });
+
+  // anchor the fixed panel under the button, right-aligned to it
+  const place = () => {
+    const r = btn.getBoundingClientRect();
+    panel.style.top = `${Math.round(r.bottom + 12)}px`;
+    panel.style.right = `${Math.round(window.innerWidth - r.right)}px`;
+  };
+
+  // popover open/close
+  let open = false;
+  const setOpen = (next) => {
+    if (next === open) return;
+    open = next;
+    btn.setAttribute('aria-expanded', String(open));
+    if (open) {
+      place();
+      panel.hidden = false;
+      requestAnimationFrame(() => panel.classList.add('open'));
+    } else {
+      panel.classList.remove('open');
+      const done = () => { if (!open) panel.hidden = true; panel.removeEventListener('transitionend', done); };
+      panel.addEventListener('transitionend', done);
+    }
+  };
+
+  btn.addEventListener('click', () => setOpen(!open));
+  document.addEventListener('click', (e) => {
+    // panel now lives outside .glass-control (portaled to body), so exclude
+    // both the control and the panel from the outside-click close
+    if (open && !glassControl.contains(e.target) && !panel.contains(e.target)) {
+      setOpen(false);
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && open) { setOpen(false); btn.focus(); }
+  });
+}
+
+/* ============================================================
    Mobile nav
    ============================================================ */
 const nav = document.querySelector('.nav');

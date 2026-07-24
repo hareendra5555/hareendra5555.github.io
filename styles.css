@@ -29,6 +29,9 @@
   --spring: cubic-bezier(0.34, 1.4, 0.5, 1);
   --glass-blur: 22px;
 
+  /* Live control: multiplies every glass fill alpha. 1 = design default. */
+  --glass-factor: 1;
+
   /* ── DARK theme (default) — Gotham night ── */
   --bg: #08080b;
   --text: #eceef4;
@@ -46,12 +49,12 @@
   --btn-ink: #0a0a0c;
 
   /* glass material — cold steel tint, no backdrop root needed */
-  --glass-bg: rgba(190, 205, 235, 0.045);
-  --glass-bg-strong: rgba(195, 210, 240, 0.078);
+  --glass-bg: rgba(190, 205, 235, calc(0.045 * var(--glass-factor)));
+  --glass-bg-strong: rgba(195, 210, 240, calc(0.078 * var(--glass-factor)));
   --glass-border: rgba(200, 214, 240, 0.14);
   --specular: rgba(255, 255, 255, 0.24);
-  --spec-blob: rgba(255, 240, 190, 0.1);
-  --sheen: rgba(214, 226, 248, 0.12);
+  --spec-blob: rgba(255, 240, 190, calc(0.1 * var(--glass-factor)));
+  --sheen: rgba(214, 226, 248, calc(0.12 * var(--glass-factor)));
   --inner-shadow: rgba(0, 0, 0, 0.7);
   --shadow-strong: rgba(0, 0, 0, 0.82);
   --shadow-soft: rgba(0, 0, 0, 0.5);
@@ -123,12 +126,12 @@
   --btn-bg: linear-gradient(135deg, #17171d 0%, #000000 100%);
   --btn-ink: #ffd100;
 
-  --glass-bg: rgba(248, 249, 251, 0.86);
-  --glass-bg-strong: rgba(255, 255, 255, 0.95);
+  --glass-bg: rgba(248, 249, 251, calc(0.86 * var(--glass-factor)));
+  --glass-bg-strong: rgba(255, 255, 255, calc(0.95 * var(--glass-factor)));
   --glass-border: rgba(16, 20, 30, 0.1);
   --specular: rgba(255, 255, 255, 1);
-  --spec-blob: rgba(255, 216, 90, 0.14);
-  --sheen: rgba(255, 255, 255, 0.55);
+  --spec-blob: rgba(255, 216, 90, calc(0.14 * var(--glass-factor)));
+  --sheen: rgba(255, 255, 255, calc(0.55 * var(--glass-factor)));
   --inner-shadow: rgba(30, 35, 50, 0.07);
   --shadow-strong: rgba(18, 22, 38, 0.16);
   --shadow-soft: rgba(18, 22, 38, 0.08);
@@ -673,6 +676,121 @@ html { scrollbar-width: thin; scrollbar-color: var(--scroll-thumb) transparent; 
 .theme-toggle .ic-moon { opacity: 0; rotate: -70deg; scale: 0.5; }
 :root[data-theme="light"] .theme-toggle .ic-sun  { opacity: 0; rotate: 70deg; scale: 0.5; }
 :root[data-theme="light"] .theme-toggle .ic-moon { opacity: 1; rotate: 0deg;  scale: 1; }
+
+/* ── Glass appearance control (popover + slider) ── */
+.glass-control { position: relative; display: flex; }
+.glass-btn {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  cursor: pointer;
+  color: var(--text);
+  background: var(--pill-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: inset 0 1px 0 var(--specular);
+  transition: background 0.3s var(--ease), transform 0.45s var(--spring), color 0.3s var(--ease);
+}
+.glass-btn svg { width: 18px; height: 18px; }
+.glass-btn:hover { background: var(--glass-hover); transform: translateY(-2px); }
+.glass-btn:active { transform: scale(0.92); }
+.glass-btn[aria-expanded="true"] { color: var(--accent-text); background: var(--glass-hover); }
+
+.glass-panel {
+  /* fixed, not absolute: the nav is a .glass element with overflow:hidden,
+     which would clip an absolutely-positioned popover. Fixed escapes that
+     clip; JS anchors it under the button (top/right set on open). */
+  position: fixed;
+  width: 248px;
+  padding: 16px;
+  --radius: 18px;
+  --glass-blur: 26px;
+  /* The control must stay legible no matter where the slider sits, so its
+     own fill is pinned (factor 1) and made near-solid rather than tracking
+     --glass-factor — otherwise dragging to "Sheer" would hide the panel. */
+  --glass-factor: 1;
+  background: color-mix(in srgb, var(--bg) 84%, var(--text) 9%);
+  z-index: 120;
+  transform-origin: top right;
+  transition: opacity 0.28s var(--ease), transform 0.34s var(--spring);
+}
+.glass-panel[hidden] { display: none; }
+.glass-panel.closing,
+.glass-panel:not(.open) { opacity: 0; transform: translateY(-8px) scale(0.96); pointer-events: none; }
+.glass-panel.open { opacity: 1; transform: none; pointer-events: auto; }
+
+.glass-panel-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; }
+.glass-panel-title {
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.glass-value {
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent-text);
+}
+
+.glass-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--bat) var(--p, 47%), var(--rule) var(--p, 47%));
+  outline: none;
+  cursor: pointer;
+  margin: 2px 0;
+}
+.glass-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--bat);
+  border: 2px solid #0a0a0c;
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.45);
+  transition: transform 0.2s var(--spring);
+}
+.glass-range::-webkit-slider-thumb:hover { transform: scale(1.15); }
+.glass-range::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--bat);
+  border: 2px solid #0a0a0c;
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.45);
+}
+.glass-range::-moz-range-track { height: 6px; border-radius: 999px; background: var(--rule); }
+.glass-range::-moz-range-progress { height: 6px; border-radius: 999px; background: var(--bat); }
+.glass-range:focus-visible { outline: 2px solid var(--accent-text); outline-offset: 4px; }
+
+.glass-panel-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+  font-size: 0.68rem;
+  color: var(--text-mute);
+}
+.glass-reset {
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  color: var(--text-dim);
+  background: var(--pill-bg);
+  border: 1px solid var(--glass-border);
+  transition: color 0.2s var(--ease), background 0.2s var(--ease);
+}
+.glass-reset:hover { color: var(--text); background: var(--glass-hover); }
 
 .nav-toggle {
   display: none;
