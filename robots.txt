@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hareendra5555.github.io/sitemap.xml

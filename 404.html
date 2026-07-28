@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>404 — Lost in Gotham · Hareendra Nerusu</title>
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#08080b" />
+  <link rel="icon" href="/apple-touch-icon.png" />
+  <script>
+    document.documentElement.classList.add('js');
+    (function () {
+      try {
+        var t = localStorage.getItem('theme');
+        document.documentElement.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
+        var g = parseFloat(localStorage.getItem('glass'));
+        if (g >= 20 && g <= 200) document.documentElement.style.setProperty('--glass-factor', g / 100);
+      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    .nf {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 40px 6vw; gap: 6px;
+    }
+    .nf-signal {
+      width: min(320px, 62vw);
+      margin-bottom: 8px;
+      display: grid; place-items: center;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--signal-disc, rgba(255,209,0,.9)) 0%, var(--signal-disc-mid, rgba(255,209,0,.34)) 52%, transparent 70%);
+      aspect-ratio: 1;
+      animation: nfpulse 5s ease-in-out infinite;
+    }
+    @keyframes nfpulse { 0%,100% { opacity: .82; } 50% { opacity: 1; } }
+    .nf-signal svg { width: 64%; fill: var(--signal-fill, #0a0a0c); }
+    .nf-code {
+      font-family: "Fraunces", Georgia, serif; font-weight: 600;
+      font-size: clamp(4.5rem, 16vw, 9rem); line-height: 1; letter-spacing: -.04em;
+      background: var(--name-grad); -webkit-background-clip: text; background-clip: text; color: transparent;
+      margin: 4px 0 2px;
+    }
+    .nf-title {
+      font-family: "Fraunces", Georgia, serif; font-weight: 600;
+      font-size: clamp(1.4rem, 4vw, 2.1rem); letter-spacing: -.02em; margin: 0 0 10px;
+      color: var(--text);
+    }
+    .nf-sub { color: var(--text-dim); max-width: 460px; margin: 0 0 30px; line-height: 1.6; }
+    .nf-actions { display: flex; flex-wrap: wrap; gap: 13px; justify-content: center; }
+  </style>
+</head>
+<body>
+  <div class="aurora" aria-hidden="true">
+    <span class="orb orb-1"></span><span class="orb orb-2"></span><span class="orb orb-3"></span>
+    <span class="orb orb-4"></span><span class="orb orb-5"></span>
+  </div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <main class="nf">
+    <div class="nf-signal" aria-hidden="true">
+      <svg viewBox="0 0 400 140"><polygon points="200,22 186,6 176,26 150,30 96,36 44,46 10,62 40,70 66,78 78,118 96,84 140,96 158,130 178,100 200,132 222,100 242,130 260,96 304,84 322,118 334,78 360,70 390,62 356,46 304,36 250,30 224,26 214,6"/></svg>
+    </div>
+    <p class="nf-code">404</p>
+    <h1 class="nf-title">You've wandered into the wrong part of Gotham.</h1>
+    <p class="nf-sub">This page slipped into the shadows — or it was never here. Let's get you back to the light.</p>
+    <div class="nf-actions">
+      <a class="btn primary" href="/"><span>Back to safety</span></a>
+      <a class="btn ghost" href="/#contact"><span>Get in touch</span></a>
+    </div>
+  </main>
+</body>
+</html>

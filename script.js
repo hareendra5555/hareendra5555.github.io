@@ -510,6 +510,31 @@ if (!reduceMotion) {
 }
 
 /* ============================================================
+   Copy email to clipboard, with confirmation
+   ============================================================ */
+document.querySelectorAll('.copy-email').forEach((btn) => {
+  const span = btn.querySelector('span');
+  const original = span ? span.textContent : '';
+  let resetTimer = null;
+  btn.addEventListener('click', async () => {
+    const email = btn.dataset.email || '';
+    try {
+      await navigator.clipboard.writeText(email);
+      if (span) span.textContent = 'Copied ✓';
+    } catch (e) {
+      // clipboard blocked (e.g. insecure context) — reveal it to copy manually
+      if (span) span.textContent = email;
+    }
+    btn.classList.add('copied');
+    clearTimeout(resetTimer);
+    resetTimer = setTimeout(() => {
+      if (span) span.textContent = original;
+      btn.classList.remove('copied');
+    }, 1800);
+  });
+});
+
+/* ============================================================
    Throwable batarang (contact) — fling it on a spinning arc
    ============================================================ */
 const batarang = document.querySelector('.batarang');

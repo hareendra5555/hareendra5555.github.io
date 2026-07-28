@@ -1959,3 +1959,13 @@ main { position: relative; z-index: 1; }
 
 /* ── brand tile backgrounds ── */
 .ic-aws        { background: #232f3e; }
+
+/* copy-email button: native <button> needs the site font; add a "copied" cue */
+.copy-email { font-family: inherit; }
+.copy-email.copied {
+  color: #0a1a12;
+  background: var(--btn-bg, var(--bat));
+  border-color: transparent;
+}
+
+}
